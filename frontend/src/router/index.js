@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import HomePage from "../views/HomePage.vue";
 import store from "@/store";
+import AdminUser from "@/views/Admin/User.vue";
 
 Vue.use(VueRouter);
 
@@ -41,7 +42,16 @@ const routes = [
             } else {
                 next();
             }
-        }
+        },
+        children: [
+            {
+                path: "users",
+                name: "AdminUser",
+                components: {
+                    adminView: AdminUser
+                }
+            }
+        ]
     },
     {
         path: "/user/login",

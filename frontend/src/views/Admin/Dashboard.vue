@@ -7,18 +7,25 @@
                         <v-icon>mdi-home</v-icon>
                     </v-list-item-action>
                     <v-list-item-content>
-                        <v-list-item-title>Home</v-list-item-title>
+                        <router-link :to="{ name: 'AdminDashboard' }">
+                            <v-list-item-title>Home</v-list-item-title>
+                        </router-link>
                     </v-list-item-content>
                 </v-list-item>
                 <v-list-item link>
                     <v-list-item-action>
-                        <v-icon>mdi-email</v-icon>
+                        <v-icon>mdi-account-cog-outline</v-icon>
                     </v-list-item-action>
                     <v-list-item-content>
-                        <v-list-item-title>Contact</v-list-item-title>
+                        <router-link :to="{ name: 'AdminUser' }">
+                            <v-list-item-title>Users</v-list-item-title>
+                        </router-link>
                     </v-list-item-content>
                 </v-list-item>
                 <v-list-item link>
+                    <v-list-item-action>
+                        <v-icon>mdi-logout</v-icon>
+                    </v-list-item-action>
                     <v-list-item-content>
                         <v-list-item-title
                             ><button @click="signOut">
@@ -36,28 +43,13 @@
             ></v-app-bar-nav-icon>
             <v-toolbar-title>Admin</v-toolbar-title>
         </v-app-bar>
-
-        <v-main>
-            <v-container class="fill-height" fluid>
-                <v-row align="center" justify="center">
-                    <v-col class="text-center">
-                        <v-tooltip left>
-                            <template v-slot:activator="{ on }">
-                                <v-btn
-                                    :href="source"
-                                    icon
-                                    large
-                                    target="_blank"
-                                    v-on="on"
-                                >
-                                    <v-icon large>mdi-code-tags</v-icon>
-                                </v-btn>
-                            </template>
-                            <span>Source</span>
-                        </v-tooltip>
-                    </v-col>
-                </v-row>
-            </v-container>
+        <v-main>       
+            <template v-if="isHome">  
+                <v-container>
+                i'm Home
+                </v-container>
+            </template>     
+            <router-view name="adminView"></router-view>
         </v-main>
         <v-footer color="indigo" app>
             <span class="white--text"
@@ -74,7 +66,8 @@ export default {
         source: String
     },
     data: () => ({
-        drawer: null
+        drawer: null,
+        home:false,
     }),
     methods: {
         ...mapActions({
@@ -87,6 +80,29 @@ export default {
                 });
             });
         }
+    },
+    computed:{
+        isHome:function(){
+            if(this.$route.name == "AdminDashboard")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 };
 </script>
+<style>
+.v-list-item__title {
+    color: black;
+}
+a {
+    text-decoration: none;
+}
+.v-list-item__title:active {
+    color: red !important;
+}
+</style>

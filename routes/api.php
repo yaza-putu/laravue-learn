@@ -22,6 +22,12 @@ Route::namespace('Api')->group(function(){
             Route::post('logout', 'LoginController@logout')->name('Logout');
             Route::post('refresh', 'LoginController@refresh')->name('Refresh');
             Route::get('me', 'LoginController@me')->name('Me');
+            // Data users
+            Route::get('/users','UserController@index')->name('User');
+            Route::get('/user/{id}','UserController@show')->name('Get.User');
+            Route::post('/save/user','UserController@create')->name('Save.User');
+            Route::patch('/update/user','UserController@update')->name('Update.User');
+            Route::delete('/delete/{id}/user','UserController@delete')->name('Delete.User');
         });
     });
 
